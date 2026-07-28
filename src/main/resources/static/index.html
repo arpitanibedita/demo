@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA DAM - Digital Vault</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="glow-bg"></div>
+
+    <div class="app-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-cubes-stacked neon-icon"></i>
+                <span>AURA<span class="highlight">DAM</span></span>
+            </div>
+
+            <button class="btn-upload-trigger" onclick="document.getElementById('fileInput').click()">
+                <i class="fa-solid fa-plus"></i> New Asset
+            </button>
+            <input type="file" id="fileInput" hidden onchange="uploadFile()">
+
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" onclick="switchView('vault', this)"><i class="fa-solid fa-hard-drive"></i> My Vault</a>
+                <a href="#" class="nav-item" onclick="switchView('recent', this)"><i class="fa-solid fa-clock-rotate-left"></i> Recent</a>
+                <a href="#" class="nav-item" onclick="switchView('starred', this)"><i class="fa-solid fa-star"></i> Starred</a>
+                <a href="#" class="nav-item" onclick="switchView('trash', this)"><i class="fa-solid fa-trash-can"></i> Trash</a>
+            </nav>
+
+            <div class="storage-widget">
+                <div class="storage-info">
+                    <span>Storage Used</span>
+                    <span id="assetCountText">0 Assets</span>
+                </div>
+                <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+            <!-- Top Search Bar -->
+            <header class="top-bar">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="searchInput" placeholder="Search assets, documents, tags..." oninput="filterFiles()">
+                </div>
+                <div class="user-profile">
+                    <div class="avatar-glow"><i class="fa-solid fa-user"></i></div>
+                </div>
+            </header>
+
+            <!-- Visual Filter Chips -->
+            <div class="filter-chips">
+                <button class="chip active" onclick="setCategoryFilter('all', this)"><i class="fa-solid fa-border-all"></i> All</button>
+                <button class="chip" onclick="setCategoryFilter('image', this)"><i class="fa-solid fa-image"></i> Images</button>
+                <button class="chip" onclick="setCategoryFilter('pdf', this)"><i class="fa-solid fa-file-pdf"></i> PDFs</button>
+                <button class="chip" onclick="setCategoryFilter('video', this)"><i class="fa-solid fa-video"></i> Videos</button>
+                <button class="chip" onclick="setCategoryFilter('code', this)"><i class="fa-solid fa-code"></i> Code</button>
+            </div>
+
+            <!-- Asset Grid -->
+            <section class="gallery-section">
+                <div class="section-header">
+                    <h2 id="viewTitle"><i class="fa-solid fa-layer-group"></i> My Assets</h2>
+                </div>
+                <div id="fileList" class="asset-grid">
+                    <!-- Cards are dynamically rendered here -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Google Drive Style Lightbox & Preview Modal -->
+    <div id="lightboxModal" class="lightbox-modal">
+        <div class="lightbox-content">
+            <button class="close-lightbox" onclick="closeLightbox()"><i class="fa-solid fa-xmark"></i></button>
+            <div class="lightbox-body">
+                <div class="lightbox-preview" id="lightboxPreviewContainer">
+                    <!-- Real image preview or file icon will be loaded here -->
+                </div>
+                <div class="lightbox-details">
+                    <h3 id="lightboxFileName">Asset Details</h3>
+                    <p class="lightbox-type" id="lightboxFileType">File Type</p>
+                    <div class="lightbox-actions">
+                        <a id="lightboxDownloadBtn" href="#" class="btn-neon" target="_blank">
+                            <i class="fa-solid fa-download"></i> Open / Download Asset
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
